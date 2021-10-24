@@ -1,3 +1,10 @@
 name: DataStructurePlugin
 version: 1.0
 main: com.plugin.DataStructurePlugin.DataStructurePlugin
+
+commands:
+  start:
+    description: start 명령어
+    usage: /start
+    aliases:
+      - start

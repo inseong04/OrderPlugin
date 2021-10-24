@@ -1,5 +1,6 @@
 package com.plugin.DataStructurePlugin.DataStructurePlugin;
 
+import com.plugin.DataStructurePlugin.DataStructurePlugin.command.StartCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class DataStructurePlugin extends JavaPlugin {
@@ -7,6 +8,8 @@ public class DataStructurePlugin extends JavaPlugin {
     public void onDisable() {
         super.onDisable();
         getLogger().info("DataStructure Plugin 활성화");
+        getCommand("start").setExecutor(new StartCommand());
+
     }
 
     @Override

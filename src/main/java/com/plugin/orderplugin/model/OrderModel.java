@@ -1,4 +1,4 @@
-package com.plugin.DataStructurePlugin.model;
+package com.plugin.orderplugin.model;
 
 public class OrderModel {
     public String userName;

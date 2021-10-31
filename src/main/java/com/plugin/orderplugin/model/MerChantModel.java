@@ -1,4 +1,4 @@
-package com.plugin.DataStructurePlugin.model;
+package com.plugin.orderplugin.model;
 
 import org.bukkit.*;
 import org.bukkit.advancement.Advancement;
@@ -33,8 +33,31 @@ import org.bukkit.util.Vector;
 import java.net.InetSocketAddress;
 import java.util.*;
 
-public class CustomModel implements Player {
-    public ArrayList<Item> orderItemList;
+public class MerChantModel implements Player {
+    String clientName;
+    OrderModel requestItem;
+
+    public MerChantModel(String clientName, OrderModel requestItem) {
+        this.clientName = clientName;
+        this.requestItem = requestItem;
+    }
+
+    public String getClientName() {
+        return clientName;
+    }
+
+    public void setClientName(String clientName) {
+        this.clientName = clientName;
+    }
+
+    public OrderModel getRequestItem() {
+        return requestItem;
+    }
+
+    public void setRequestItem(OrderModel requestItem) {
+        this.requestItem = requestItem;
+    }
+
     @Override
     public String getDisplayName() {
         return null;
@@ -1825,3 +1848,5 @@ public class CustomModel implements Player {
         return null;
     }
 }
+
+

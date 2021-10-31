@@ -1,4 +1,4 @@
-package com.plugin.DataStructurePlugin;
+package com.plugin.orderplugin;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

@@ -1,6 +1,6 @@
-name: Datastructure
+name: OrderPlugin
 version: 1.0
-main: com.plugin.DataStructurePlugin.DataStructurePlugin
+main: com.plugin.orderplugin.OrderPlugin
 
 commands:
   setplayer :

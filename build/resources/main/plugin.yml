@@ -1,0 +1,8 @@
+name: Datastructure
+version: 1.0
+main: com.plugin.DataStructurePlugin.DataStructurePlugin
+
+commands:
+  상점:
+    description: 상점 플러그인
+    usage: /상점

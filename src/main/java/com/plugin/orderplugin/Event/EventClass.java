@@ -58,6 +58,8 @@ public class EventClass implements Listener {
 
     @EventHandler
     public void onChatReceive(AsyncPlayerChatEvent e) {
+        Player player = e.getPlayer();
+
         String message = e.getMessage();
 
         if (message != null) {

@@ -31,22 +31,6 @@ public class MerchantCommand implements CommandExecutor {
                     case "수락":
                     case "거절": {
 
-                            //if server request exist
-
-/*                            MerChantModel merChantModel = null;
-
-                            ClientRequestModel clientRequestModel;
-                            for (int i = 0; i < OrderPlugin.requestList.size(); i++) {
-                                 clientRequestModel = OrderPlugin.requestList.get(i);
-                                if (sender.getName().equals(clientRequestModel.getMerchantName())) {
-                                    merChantModel = new MerChantModel
-                                            (clientRequestModel.getClientName(), clientRequestModel.getRequestItem());
-                                    break;
-                                }
-                                clientRequestModel = null;
-                            }*/
-
-
                             if (clientName == null) {
                                 sender.sendMessage(sender.getName() + " 님에게 들어온 주문이 없습니다.");
                             }

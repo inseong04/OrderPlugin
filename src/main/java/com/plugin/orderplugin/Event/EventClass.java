@@ -49,8 +49,8 @@ public class EventClass implements Listener {
 
                     String orderStr = "빵:"+orderModel.milk+"개/우유:"+orderModel.milk+"개/물:"+orderModel.water+"개/치킨:"+orderModel.chicken+"개/생선"+orderModel.fish+"개";
                     targetPlayer.sendMessage("[상점] "+player.getName()+" 님이 "+orderStr+ "주문을 요청하였습니다." +
-                        "\n"+"요청을 수락하시려면 /상점 수락"
-                    +"\n"+"요청을 거절하시려면 /상점 거절");
+                        "\n"+"요청을 수락하시려면 /상점 수락" +
+                            "\n"+"요청을 거절하시려면 /상점 거절");
                 }
             }
         }

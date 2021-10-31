@@ -31,10 +31,6 @@ public class MerchantCommand implements CommandExecutor {
                     case "수락":
                     case "거절": {
 
-                        if (OrderPlugin.requestList.size() <= 0) {
-                            sender.sendMessage("서버에 들어온 주문이 없습니다.");
-                        }
-                        else {
                             //if server request exist
 
 /*                            MerChantModel merChantModel = null;
@@ -73,9 +69,7 @@ public class MerchantCommand implements CommandExecutor {
                                 }
 
                                 // if request exist
-                            }
 
-                            //if server request exist
                         }
 
                         break;

@@ -101,9 +101,9 @@ public class MerchantCommand implements CommandExecutor {
                     }
 
                     case "도움말": {
-                        sender.sendMessage("/상점 수락 : 들어온 주문을 수락합니다. \n"+
-                                "/상점 거절 : 들어온 주문을 거절합니다. \n"+
-                                "/상점 주문확인 : 상점의 주문을 확인합니다.");
+                        sender.sendMessage("§l/상점 수락 :"+" 들어온 주문을 수락합니다. \n"+
+                                "§l/상점 거절 :"+" 들어온 주문을 거절합니다. \n"+
+                                "§l/상점 주문확인 :"+" 상점의 주문을 확인합니다.");
 
                         break;
                     }

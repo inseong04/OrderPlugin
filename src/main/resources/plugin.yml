@@ -1,4 +1,4 @@
-name: Datastructure
+name: OrderPlugin
 version: 1.0
 main: com.plugin.orderplugin.OrderPlugin
 api-version: 1.13

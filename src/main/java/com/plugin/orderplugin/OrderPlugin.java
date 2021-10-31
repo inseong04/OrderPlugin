@@ -1,9 +1,10 @@
-package com.plugin.orderplugin;
-import com.plugin.orderplugin.Event.EventClass;
-import com.plugin.orderplugin.command.CustomerCommand;
-import com.plugin.orderplugin.command.MerchantCommand;
-import com.plugin.orderplugin.command.StartCommand;
-import com.plugin.orderplugin.model.ClientRequestModel;
+package com.plugin.DataStructurePlugin;
+import com.plugin.DataStructurePlugin.command.MerchantCommand;
+import com.plugin.DataStructurePlugin.command.StartCommand;
+import com.plugin.DataStructurePlugin.model.ClientRequestModel;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ public class OrderPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         super.onEnable();
-        getLogger().info("DataStructure Plugin 활성화");
+        getLogger().info("Order Plugin 활성화");
         getServer().getPluginManager().registerEvents(new EventClass(), this);
         setCommend();
     }
@@ -31,7 +32,7 @@ public class OrderPlugin extends JavaPlugin {
     @Override
     public void onDisable() {
         super.onDisable();
-        getLogger().info("DataStructure Plugin 비활성화");
+        getLogger().info("Order Plugin 비활성화");
 
 
     }

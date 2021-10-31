@@ -1,14 +1,22 @@
-package com.plugin.DataStructurePlugin.DataStructurePlugin;
-
-import com.plugin.DataStructurePlugin.DataStructurePlugin.command.StartCommand;
+package com.plugin.DataStructurePlugin;
+import com.plugin.DataStructurePlugin.command.MerchantCommand;
+import com.plugin.DataStructurePlugin.model.ClientRequestModel;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DataStructurePlugin extends JavaPlugin {
+
+    public static List<ClientRequestModel> requestList = new ArrayList<>();
+
+
     @Override
     public void onEnable() {
         super.onEnable();
         getLogger().info("DataStructure Plugin 활성화");
-        getCommand("start").setExecutor(new StartCommand());
+        getCommand("상점").setExecutor(new MerchantCommand());
+
     }
 
     @Override

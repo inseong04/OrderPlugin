@@ -1,10 +1,10 @@
-package com.plugin.DataStructurePlugin.DataStructurePlugin.model;
+package com.plugin.DataStructurePlugin.model;
 
-public class ClientRequestModel {
+public class MerChantModel {
     String clientName;
     String requestItem;
 
-    public ClientRequestModel(String clientName, String requestItem) {
+    public MerChantModel(String clientName, String requestItem) {
         this.clientName = clientName;
         this.requestItem = requestItem;
     }
@@ -25,3 +25,5 @@ public class ClientRequestModel {
         this.requestItem = requestItem;
     }
 }
+
+

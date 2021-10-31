@@ -19,8 +19,9 @@ public class MerchantCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (AppHelper.isPlayer(sender)) {
-            if (args[0] != null) {
 
+            sender.sendMessage(String.valueOf(args.length));
+            if (args[0] != null) {
                 switch (args[0]) {
                     case "수락":
                     case "거절": {
@@ -86,7 +87,6 @@ public class MerchantCommand implements CommandExecutor {
                             sender.sendMessage("아직 수락한 주문이 없습니다.");
                         }
                     }
-
 
                     case "주문확인": {
                         if (merchantQueue.peek() != null) {

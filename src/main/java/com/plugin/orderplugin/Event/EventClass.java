@@ -1,5 +1,6 @@
 package com.plugin.orderplugin.Event;
 
+import com.plugin.orderplugin.OrderPlugin;
 import com.plugin.orderplugin.model.ClientRequestModel;
 import com.plugin.orderplugin.model.OrderModel;
 import org.bukkit.entity.Player;
@@ -41,6 +42,12 @@ public class EventClass implements Listener {
                     e.getView().close();
                     requestList.add(new ClientRequestModel(player.getDisplayName(), merchantName, orderModel));
                     player.sendMessage(merchantName+"님에게"+" 주문을 보냈습니다. 기다려주세요");
+                    Player targetPlayer = player.getServer().getPlayer(merchantName);
+
+
+                    targetPlayer.sendMessage(player.getName()+" 님이 "+"ㅇㅇㅇ를 주문을 요청하였습니다." +
+                        "\n"+"요청을 수락하시려면 /상점 수락"
+                    +"\n"+"요청을 거절하시려면 /상점 거절");
                 }
             }
         }

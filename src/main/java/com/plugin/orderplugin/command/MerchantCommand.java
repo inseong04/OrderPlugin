@@ -1,9 +1,9 @@
-package com.plugin.DataStructurePlugin.command;
+package com.plugin.orderplugin.command;
 
-import com.plugin.DataStructurePlugin.AppHelper;
-import com.plugin.DataStructurePlugin.DataStructurePlugin;
-import com.plugin.DataStructurePlugin.model.ClientRequestModel;
-import com.plugin.DataStructurePlugin.model.MerChantModel;
+import com.plugin.orderplugin.AppHelper;
+import com.plugin.orderplugin.OrderPlugin;
+import com.plugin.orderplugin.model.ClientRequestModel;
+import com.plugin.orderplugin.model.MerChantModel;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -25,7 +25,7 @@ public class MerchantCommand implements CommandExecutor {
                     case "수락":
                     case "거절": {
 
-                        if (DataStructurePlugin.requestList.size() <= 0) {
+                        if (OrderPlugin.requestList.size() <= 0) {
                             sender.sendMessage("서버에 들어온 주문이 없습니다.");
                         }
                         else {
@@ -34,8 +34,8 @@ public class MerchantCommand implements CommandExecutor {
                             MerChantModel merChantModel = null;
 
                             ClientRequestModel clientRequestModel;
-                            for (int i = 0; i < DataStructurePlugin.requestList.size(); i++) {
-                                 clientRequestModel = DataStructurePlugin.requestList.get(i);
+                            for (int i = 0; i < OrderPlugin.requestList.size(); i++) {
+                                 clientRequestModel = OrderPlugin.requestList.get(i);
                                 if (sender.getName().equals(clientRequestModel.getMerchantName())) {
                                     merChantModel = new MerChantModel
                                             (clientRequestModel.getClientName(), clientRequestModel.getRequestItem());

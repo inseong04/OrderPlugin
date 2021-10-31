@@ -1,18 +1,13 @@
-package com.plugin.DataStructurePlugin;
-import com.plugin.DataStructurePlugin.command.MerchantCommand;
-import com.plugin.DataStructurePlugin.command.StartCommand;
-import com.plugin.DataStructurePlugin.model.ClientRequestModel;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
+package com.plugin.orderplugin;
+import com.plugin.orderplugin.command.MerchantCommand;
+import com.plugin.orderplugin.command.StartCommand;
+import com.plugin.orderplugin.model.ClientRequestModel;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.scoreboard.Team;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DataStructurePlugin extends JavaPlugin {
+public class OrderPlugin extends JavaPlugin {
 
     public static List<ClientRequestModel> requestList = new ArrayList<>();
 
@@ -20,7 +15,7 @@ public class DataStructurePlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         super.onEnable();
-        getLogger().info("DataStructure Plugin 활성화");
+        getLogger().info("Order Plugin 활성화");
         getCommand("상점").setExecutor(new MerchantCommand());
         getCommand("setplayer").setExecutor(new StartCommand());
     }
@@ -28,7 +23,7 @@ public class DataStructurePlugin extends JavaPlugin {
     @Override
     public void onDisable() {
         super.onDisable();
-        getLogger().info("DataStructure Plugin 비활성화");
+        getLogger().info("Order Plugin 비활성화");
 
 
     }

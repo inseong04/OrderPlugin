@@ -71,7 +71,7 @@ public class MerchantCommand implements CommandExecutor {
                             //if server request exist
                         }
 
-                        return true;
+                        break;
                     }
 
                     case "완료": {
@@ -79,14 +79,11 @@ public class MerchantCommand implements CommandExecutor {
                             MerChantModel request = merchantQueue.poll();
                             Player targetPlayer = sender.getServer().getPlayer(request.getClientName());
                             targetPlayer.sendMessage(sender.getName()+"에서"+targetPlayer.getName()+" 님이 주문한 아이템이 완성되었습니다!");
-                            return true;
 
 
                         }
                         else {
                             sender.sendMessage("아직 수락한 주문이 없습니다.");
-                            return true;
-
                         }
                     }
 
@@ -96,31 +93,31 @@ public class MerchantCommand implements CommandExecutor {
                             MerChantModel request = merchantQueue.peek();
                             sender.sendMessage("주문자 : "+request.getClientName()+"\n"+
                                     "주문 아이템 : "+request.getRequestItem()+"\n");
-                            return true;
-
                         }
                         else {
                             sender.sendMessage("아직 수락한 주문이 없습니다.");
                         }
-                        return true;
-
+                        break;
                     }
 
                     case "도움말": {
                         sender.sendMessage("/상점 수락 : 들어온 주문을 수락합니다. \n"+
                                 "/상점 거절 : 들어온 주문을 거절합니다. \n"+
                                 "/상점 주문확인 : 상점의 주문을 확인합니다.");
-                        return true;
+
+                        break;
                     }
                 }
 
 
             }
             return true;
-
         }
-
-        return false;
+        else {
+            //콘솔창에서 사용한 경우
+            sender.sendMessage("플레이어가 아닙니다.");
+            return false;
+        }
     }
 }
 

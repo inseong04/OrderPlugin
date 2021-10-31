@@ -16,11 +16,16 @@ public class MerchantCommand implements CommandExecutor {
 
     Queue<MerChantModel> merchantQueue = new LinkedList<>();
 
+    public static String clientName;
+    public static String requestItem;
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (AppHelper.isPlayer(sender)) {
 
-            sender.sendMessage(String.valueOf(args.length));
+
+
+            sender.sendMessage(String.valueOf(args[0]));
             if (args[0] != null) {
                 switch (args[0]) {
                     case "수락":
@@ -32,7 +37,7 @@ public class MerchantCommand implements CommandExecutor {
                         else {
                             //if server request exist
 
-                            MerChantModel merChantModel = null;
+/*                            MerChantModel merChantModel = null;
 
                             ClientRequestModel clientRequestModel;
                             for (int i = 0; i < OrderPlugin.requestList.size(); i++) {
@@ -43,10 +48,10 @@ public class MerchantCommand implements CommandExecutor {
                                     break;
                                 }
                                 clientRequestModel = null;
-                            }
+                            }*/
 
 
-                            if (merChantModel == null) {
+                            if (clientName == null) {
                                 sender.sendMessage(sender.getName() + " 님에게 들어온 주문이 없습니다.");
                             }
 
@@ -54,6 +59,7 @@ public class MerchantCommand implements CommandExecutor {
                                 // if request exist
 
                                 if(args[0].equals("수락")) {
+                                    MerChantModel merChantModel = new MerChantModel(clientName, requestItem);
                                     merchantQueue.add(merChantModel);
                                     sender.sendMessage(merChantModel.getClientName() + " 님의 주문을 수락합니다.");
 
@@ -62,7 +68,7 @@ public class MerchantCommand implements CommandExecutor {
                                 }
 
                                 else if (args[0].equals("거절")) {
-                                    Player targetPlayer = sender.getServer().getPlayer(merChantModel.getClientName());
+                                    Player targetPlayer = sender.getServer().getPlayer(clientName);
                                     targetPlayer.sendMessage(sender.getName() + "님이 주문을 거절하였습니다.");
                                 }
 

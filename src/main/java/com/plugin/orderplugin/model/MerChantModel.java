@@ -35,9 +35,9 @@ import java.util.*;
 
 public class MerChantModel implements Player {
     String clientName;
-    OrderModel requestItem;
+    String requestItem;
 
-    public MerChantModel(String clientName, OrderModel requestItem) {
+    public MerChantModel(String clientName, String requestItem) {
         this.clientName = clientName;
         this.requestItem = requestItem;
     }
@@ -50,11 +50,12 @@ public class MerChantModel implements Player {
         this.clientName = clientName;
     }
 
-    public OrderModel getRequestItem() {
+
+    public String getRequestItem() {
         return requestItem;
     }
 
-    public void setRequestItem(OrderModel requestItem) {
+    public void setRequestItem(String requestItem) {
         this.requestItem = requestItem;
     }
 

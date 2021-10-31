@@ -1,6 +1,7 @@
 package com.plugin.orderplugin.Event;
 
 import com.plugin.orderplugin.OrderPlugin;
+import com.plugin.orderplugin.command.MerchantCommand;
 import com.plugin.orderplugin.model.ClientRequestModel;
 import com.plugin.orderplugin.model.OrderModel;
 import org.bukkit.entity.Player;
@@ -22,6 +23,7 @@ public class EventClass implements Listener {
             e.setCancelled(true);
             switch (e.getRawSlot()){
                 case 11->{
+                    player.sendMessage("esfgaweaweg");
                     orderModel.bread++;
                 }
                 case 12->{
@@ -46,7 +48,7 @@ public class EventClass implements Listener {
                     Player targetPlayer = player.getServer().getPlayer(merchantName);
 
                     String orderStr = "빵:"+orderModel.milk+"개/우유:"+orderModel.milk+"개/물:"+orderModel.water+"개/치킨:"+orderModel.chicken+"개/생선"+orderModel.fish+"개";
-                    targetPlayer.sendMessage(player.getName()+" 님이 "+orderStr+ "주문을 요청하였습니다." +
+                    targetPlayer.sendMessage("[상점] "+player.getName()+" 님이 "+orderStr+ "주문을 요청하였습니다." +
                         "\n"+"요청을 수락하시려면 /상점 수락"
                     +"\n"+"요청을 거절하시려면 /상점 거절");
                 }
@@ -54,10 +56,17 @@ public class EventClass implements Listener {
         }
     }
 
-
-    //여기에 코드 적으면 됨
     @EventHandler
     public void onChatReceive(AsyncPlayerChatEvent e) {
+        String message = e.getMessage();
 
+        if (message != null) {
+            String[] splitMessage = message.split(" ");
+
+            if (splitMessage[0].equals("[상점]")) {
+                MerchantCommand.clientName = splitMessage[1];
+                MerchantCommand.requestItem = splitMessage[3];
+            }
+        }
     }
 }

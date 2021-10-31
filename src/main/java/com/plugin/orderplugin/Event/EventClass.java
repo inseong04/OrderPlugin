@@ -15,6 +15,12 @@ import static com.plugin.orderplugin.command.CustomerCommand.merchantName;
 
 public class EventClass implements Listener {
 
+    int bread = 0;
+    int milk = 0;
+    int water = 0;
+    int chicken = 0;
+    int fish = 0;
+
     @EventHandler
     public void openInventory(InventoryClickEvent e){
         Player player = (Player) e.getWhoClicked();
@@ -23,20 +29,25 @@ public class EventClass implements Listener {
             e.setCancelled(true);
             switch (e.getRawSlot()){
                 case 11->{
-                    player.sendMessage("esfgaweaweg");
-                    orderModel.bread++;
+                    bread+=1;
+                    orderModel.setBread(bread);
+                    player.sendMessage(orderModel.bread+"");
                 }
                 case 12->{
-                    orderModel.milk++;
+                    milk+=1;
+                    orderModel.setMilk(milk);
                 }
                 case 13->{
-                    orderModel.water++;
+                    water+=1;
+                    orderModel.setMilk(water);
                 }
                 case 14->{
-                    orderModel.chicken++;
+                    chicken+=1;
+                    orderModel.setChicken(chicken);
                 }
                 case 15->{
-                    orderModel.fish++;
+                    fish+=1;
+                    orderModel.setFish(fish);
                 }
                 case 18->{
                     e.getView().close();

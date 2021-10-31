@@ -18,14 +18,20 @@ public class StartCommand implements CommandExecutor {
             if(args[0] != null){
                 Player p = (Player) sender;
                 p.setCustomNameVisible(true);
+                String playerName = p.getDisplayName();
+
+                if(playerName.startsWith("손님 ") ||
+                        playerName.startsWith("상인 ")){
+                    playerName = playerName.substring(3);
+                }
                 switch (args[0]){
                     case "상인" ->{
                         sender.sendMessage("당신은 상인이 되었습니다.");
-                        p.setCustomName("상인");;
+                        p.setDisplayName("상인 "+playerName);
                     }
                     case "손님" -> {
                         sender.sendMessage("당신은 손님이 되었습니다.");
-                        p.setCustomName("손님");
+                        p.setDisplayName("손님 "+playerName);
                     }
                 }
             }

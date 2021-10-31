@@ -34,7 +34,7 @@ import java.net.InetSocketAddress;
 import java.util.*;
 
 public class CustomModel implements Player {
-    ArrayList<Item> orderItemList;
+    public ArrayList<Item> orderItemList;
     @Override
     public String getDisplayName() {
         return null;

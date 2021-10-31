@@ -3,9 +3,9 @@ package com.plugin.DataStructurePlugin.model;
 public class ClientRequestModel {
     String clientName;
     String merchantName;
-    String requestItem;
+    OrderModel requestItem;
 
-    public ClientRequestModel(String clientName, String merchantName, String requestItem) {
+    public ClientRequestModel(String clientName, String merchantName, OrderModel requestItem) {
         this.clientName = clientName;
         this.merchantName = merchantName;
         this.requestItem = requestItem;
@@ -27,11 +27,11 @@ public class ClientRequestModel {
         this.merchantName = merchantName;
     }
 
-    public String getRequestItem() {
+    public OrderModel getRequestItem() {
         return requestItem;
     }
 
-    public void setRequestItem(String requestItem) {
+    public void setRequestItem(OrderModel requestItem) {
         this.requestItem = requestItem;
     }
 }

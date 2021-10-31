@@ -10,4 +10,4 @@
 - [이준상](https://github.com/samgashyeong) 
 
 ## 📁 Plugin
-[DataStructure-1.0-SNAPSHOT.jar](https://github.com/inseong04/DataStructurePlugin/blob/master/build/libs)
+[Order-1.0-SNAPSHOT.jar](https://github.com/inseong04/OrderPlugin/tree/master/build/libs)

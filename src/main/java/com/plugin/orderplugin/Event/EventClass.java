@@ -9,45 +9,37 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.server.ServerCommandEvent;
+
+import java.util.logging.Logger;
 
 import static com.plugin.orderplugin.OrderPlugin.requestList;
 import static com.plugin.orderplugin.command.CustomerCommand.merchantName;
-
 public class EventClass implements Listener {
 
-    int bread = 0;
-    int milk = 0;
-    int water = 0;
-    int chicken = 0;
-    int fish = 0;
+    OrderModel orderModel = new OrderModel(0, 0, 0, 0, 0);
 
     @EventHandler
     public void openInventory(InventoryClickEvent e){
         Player player = (Player) e.getWhoClicked();
-        OrderModel orderModel = new OrderModel(player.getName());
+        orderModel.userName = player.getName();
         if(e.getView().getTitle().equals("주문 메뉴")){
             e.setCancelled(true);
             switch (e.getRawSlot()){
                 case 11->{
-                    bread+=1;
-                    orderModel.setBread(bread);
-                    player.sendMessage(orderModel.bread+"");
+                    orderModel.bread++;
                 }
                 case 12->{
-                    milk+=1;
-                    orderModel.setMilk(milk);
+                    orderModel.milk++;
                 }
                 case 13->{
-                    water+=1;
-                    orderModel.setMilk(water);
+                    orderModel.water++;
                 }
                 case 14->{
-                    chicken+=1;
-                    orderModel.setChicken(chicken);
+                    orderModel.chicken++;
                 }
                 case 15->{
-                    fish+=1;
-                    orderModel.setFish(fish);
+                    orderModel.fish++;
                 }
                 case 18->{
                     e.getView().close();
@@ -62,16 +54,18 @@ public class EventClass implements Listener {
                     targetPlayer.sendMessage("[상점] "+player.getName()+" 님이 "+orderStr+ "주문을 요청하였습니다." +
                         "\n"+"요청을 수락하시려면 /상점 수락" +
                             "\n"+"요청을 거절하시려면 /상점 거절");
+
+                    orderModel.setZero();
                 }
             }
         }
     }
 
     @EventHandler
-    public void onChatReceive(AsyncPlayerChatEvent e) {
-        Player player = e.getPlayer();
-
-        String message = e.getMessage();
+    public void onChatReceive(ServerCommandEvent e) {
+        String message = e.getCommand();
+        Player player = (Player) e.getSender();
+        player.sendMessage("명령어가 작동함");
 
         if (message != null) {
             String[] splitMessage = message.split(" ");

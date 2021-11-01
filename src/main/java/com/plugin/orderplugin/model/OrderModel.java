@@ -2,14 +2,18 @@ package com.plugin.orderplugin.model;
 
 public class OrderModel {
     public String userName;
-    public int bread = 0;
-    public int milk = 0;
-    public int water = 0;
-    public int chicken = 0;
-    public int fish = 0;
+    public int bread;
+    public int milk;
+    public int water;
+    public int chicken;
+    public int fish;
 
-    public OrderModel(String userName){
-        this.userName = userName;
+    public  OrderModel(int bread, int milk, int water, int chicken, int fish){
+        this.bread = bread;
+        this.milk = milk;
+        this.water = water;
+        this.chicken = chicken;
+        this.fish = fish;
     }
 
     public String getUserName() {
@@ -58,5 +62,13 @@ public class OrderModel {
 
     public void setFish(int fish) {
         this.fish = fish;
+    }
+
+    public void setZero(){
+        this.fish = 0;
+        this.chicken = 0;
+        this.water = 0;
+        this.milk = 0;
+        this.bread = 0;
     }
 }

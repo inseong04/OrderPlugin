@@ -14,6 +14,8 @@ public class OrderPlugin extends JavaPlugin {
     public static List<ClientRequestModel> requestList = new ArrayList<>();
 
 
+    private OrderPlugin orderPlugin;
+
     @Override
     public void onEnable() {
         super.onEnable();
@@ -26,6 +28,10 @@ public class OrderPlugin extends JavaPlugin {
         getCommand("상점").setExecutor(new MerchantCommand());
         getCommand("setplayer").setExecutor(new StartCommand());
         getCommand("주문").setExecutor(new CustomerCommand());
+    }
+
+    public void sendMessage(){
+        
     }
 
     @Override
@@ -51,6 +57,10 @@ public class OrderPlugin extends JavaPlugin {
 //        Team t = s.registerNewTeam("손님");
 //        t.setPrefix(ChatColor.RED + "");
 //    }
+
+    public OrderPlugin getOrderPlugin(){
+        return orderPlugin;
+    }
 
 
 }

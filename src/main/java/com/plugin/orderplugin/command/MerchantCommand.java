@@ -46,10 +46,8 @@ public class MerchantCommand implements CommandExecutor {
                                 // if request exist
 
                                 if(args[0].equals("수락")) {
-                                    MerChantModel merChantModel = new MerChantModel(MerchantData.get(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "clientName"),
-                                            PersistentDataType.STRING),
-                                            MerchantData.get(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "sendToCustomData"),
-                                            PersistentDataType.STRING));
+                                    MerChantModel merChantModel = new MerChantModel(MerchantData.get(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "clientName"), PersistentDataType.STRING),
+                                            MerchantData.get(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "sendToCustomData"), PersistentDataType.STRING));
                                     merchantQueue.add(merChantModel);
                                     sender.sendMessage(merChantModel.getClientName() + " 님의 주문을 수락합니다.");
 
@@ -58,6 +56,8 @@ public class MerchantCommand implements CommandExecutor {
                                 }
 
                                 else if (args[0].equals("거절")) {
+
+
                                     Player targetPlayer = sender.getServer().getPlayer(clientName);
                                     targetPlayer.sendMessage(sender.getName() + "님이 주문을 거절하였습니다.");
                                 }
@@ -95,9 +95,24 @@ public class MerchantCommand implements CommandExecutor {
                     }
 
                     case "대기열": {
-                        sender.sendMessage("--------------------------");
-                        sender.sendMessage("--------------------------");
-                    }
+                        if (merchantQueue.peek() != null) {
+                            Queue<MerChantModel> readQueue = merchantQueue;
+                            sender.sendMessage("--------------------------");
+
+                            for (int i=0; merchantQueue.size() > i; i++) {
+
+                                MerChantModel request = readQueue.poll();
+
+                                String message ="주문한 고객 이름 : "+request.getClientName()+"\n"
+                                        +"주문한 아이템 : "+request.getRequestItem()+"\n";
+
+                                sender.sendMessage(message);
+
+                            }
+
+                            sender.sendMessage("--------------------------");
+                        }
+                }
 
                     case "도움말": {
                         sender.sendMessage("§l/상점 수락 :"+" 들어온 주문을 수락합니다. \n"+

@@ -26,7 +26,6 @@ public class EventClass implements Listener {
     public void openInventory(InventoryClickEvent e){
         Player player = (Player) e.getWhoClicked();
         orderModel.userName = player.getName();
-        orderModel.userIP = player.getAddress().toString();
         if(e.getView().getTitle().equals("주문 메뉴")){
             e.setCancelled(true);
             switch (e.getRawSlot()){

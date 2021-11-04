@@ -29,6 +29,9 @@ public class MerchantCommand implements CommandExecutor {
         Player p = (Player) sender;
         MerchantData = p.getPersistentDataContainer();
         if (AppHelper.isPlayer(sender)) {
+
+
+
             sender.sendMessage(String.valueOf(args[0]));
             if (args[0] != null) {
                 switch (args[0]) {
@@ -91,10 +94,16 @@ public class MerchantCommand implements CommandExecutor {
                         break;
                     }
 
+                    case "대기열": {
+                        sender.sendMessage("--------------------------");
+                        sender.sendMessage("--------------------------");
+                    }
+
                     case "도움말": {
                         sender.sendMessage("§l/상점 수락 :"+" 들어온 주문을 수락합니다. \n"+
                                 "§l/상점 거절 :"+" 들어온 주문을 거절합니다. \n"+
                                 "§l/상점 주문확인 :"+" 상점의 주문을 확인합니다.");
+
                         break;
                     }
                 }

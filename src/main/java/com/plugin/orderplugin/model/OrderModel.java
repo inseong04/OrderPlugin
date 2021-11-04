@@ -2,6 +2,7 @@ package com.plugin.orderplugin.model;
 
 public class OrderModel {
     public String userName;
+    public String userIP;
     public int bread;
     public int milk;
     public int water;
@@ -62,6 +63,14 @@ public class OrderModel {
 
     public void setFish(int fish) {
         this.fish = fish;
+    }
+
+    public String getUserIP() {
+        return userIP;
+    }
+
+    public void setUserIP(String userIP) {
+        this.userIP = userIP;
     }
 
     public void setZero(){

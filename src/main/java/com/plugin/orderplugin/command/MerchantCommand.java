@@ -4,10 +4,14 @@ import com.plugin.orderplugin.AppHelper;
 import com.plugin.orderplugin.OrderPlugin;
 import com.plugin.orderplugin.model.ClientRequestModel;
 import com.plugin.orderplugin.model.MerChantModel;
+import org.bukkit.NamespacedKey;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataHolder;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -15,23 +19,23 @@ import java.util.Queue;
 public class MerchantCommand implements CommandExecutor {
 
     Queue<MerChantModel> merchantQueue = new LinkedList<>();
+    PersistentDataContainer MerchantData;
 
     public static String clientName;
     public static String requestItem;
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        Player p = (Player) sender;
+        MerchantData = p.getPersistentDataContainer();
         if (AppHelper.isPlayer(sender)) {
-
-
-
             sender.sendMessage(String.valueOf(args[0]));
             if (args[0] != null) {
                 switch (args[0]) {
                     case "수락":
                     case "거절": {
 
-                            if (clientName == null) {
+                            if (!MerchantData.has(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "sendToCustomData"), PersistentDataType.STRING)) {
                                 sender.sendMessage(sender.getName() + " 님에게 들어온 주문이 없습니다.");
                             }
 
@@ -39,7 +43,10 @@ public class MerchantCommand implements CommandExecutor {
                                 // if request exist
 
                                 if(args[0].equals("수락")) {
-                                    MerChantModel merChantModel = new MerChantModel(clientName, requestItem);
+                                    MerChantModel merChantModel = new MerChantModel(MerchantData.get(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "clientName"),
+                                            PersistentDataType.STRING),
+                                            MerchantData.get(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "sendToCustomData"),
+                                            PersistentDataType.STRING));
                                     merchantQueue.add(merChantModel);
                                     sender.sendMessage(merChantModel.getClientName() + " 님의 주문을 수락합니다.");
 
@@ -88,7 +95,6 @@ public class MerchantCommand implements CommandExecutor {
                         sender.sendMessage("§l/상점 수락 :"+" 들어온 주문을 수락합니다. \n"+
                                 "§l/상점 거절 :"+" 들어온 주문을 거절합니다. \n"+
                                 "§l/상점 주문확인 :"+" 상점의 주문을 확인합니다.");
-
                         break;
                     }
                 }

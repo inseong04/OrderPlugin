@@ -44,7 +44,6 @@ public class CustomerCommand implements CommandExecutor {
                     i.setItem(18, BackItem);
                     i.setItem(26, OrderItem);
                     player.openInventory(i);
-
                 }
             }
             else{

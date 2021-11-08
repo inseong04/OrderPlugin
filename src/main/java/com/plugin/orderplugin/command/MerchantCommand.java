@@ -79,7 +79,7 @@ public class MerchantCommand implements CommandExecutor {
                         if (OrderPlugin.merchantQueue.peek() != null) {
                             MerChantModel request = OrderPlugin.merchantQueue.poll();
                             Player targetPlayer = sender.getServer().getPlayer(request.getClientName());
-                            targetPlayer.sendMessage(sender.getName()+"에서"+targetPlayer.getName()+" 님이 주문한 아이템이 완성되었습니다!");
+                            targetPlayer.sendMessage(sender.getName()+"에서"+targetPlayer.getName()+" 님이 주문한 아이템이 완성되었습니다!\n아이템을 받으려면 /주문 아이템수령 을 입력해주세요!");
 
                             PersistentDataContainer targetPlayerData = targetPlayer.getPersistentDataContainer();
 

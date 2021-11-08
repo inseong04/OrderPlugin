@@ -18,7 +18,7 @@ import java.util.Queue;
 
 public class MerchantCommand implements CommandExecutor {
 
-    Queue<MerChantModel> merchantQueue = new LinkedList<>();
+
     PersistentDataContainer MerchantData;
 
     public static String clientName;
@@ -46,13 +46,19 @@ public class MerchantCommand implements CommandExecutor {
                                 // if request exist
 
                                 if(args[0].equals("수락")) {
+
+                                    sender.sendMessage("before : "+String.valueOf(OrderPlugin.merchantQueue.size()));
+
+
                                     MerChantModel merChantModel = new MerChantModel(MerchantData.get(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "clientName"), PersistentDataType.STRING),
                                             MerchantData.get(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "sendToCustomData"), PersistentDataType.STRING));
-                                    merchantQueue.add(merChantModel);
+                                    OrderPlugin.merchantQueue.add(merChantModel);
                                     sender.sendMessage(merChantModel.getClientName() + " 님의 주문을 수락합니다.");
 
                                     Player targetPlayer = sender.getServer().getPlayer(merChantModel.getClientName());
                                     targetPlayer.sendMessage(sender.getName() + " 님이 주문을 수락하였습니다!");
+                                    sender.sendMessage("after"+String.valueOf(OrderPlugin.merchantQueue.size()));
+
                                 }
 
                                 else if (args[0].equals("거절")) {
@@ -70,23 +76,30 @@ public class MerchantCommand implements CommandExecutor {
                     }
 
                     case "완료": {
-                        if (merchantQueue.peek() != null) {
-                            MerChantModel request = merchantQueue.poll();
+                        if (OrderPlugin.merchantQueue.peek() != null) {
+                            MerChantModel request = OrderPlugin.merchantQueue.poll();
                             Player targetPlayer = sender.getServer().getPlayer(request.getClientName());
                             targetPlayer.sendMessage(sender.getName()+"에서"+targetPlayer.getName()+" 님이 주문한 아이템이 완성되었습니다!");
 
+                            PersistentDataContainer targetPlayerData = targetPlayer.getPersistentDataContainer();
+
+                            targetPlayerData.set(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "sendItem")
+                                    , PersistentDataType.STRING, "ok");
 
                         }
                         else {
                             sender.sendMessage("아직 수락한 주문이 없습니다.");
                         }
+                        break;
                     }
 
                     case "주문확인": {
-                        if (merchantQueue.peek() != null) {
-                            MerChantModel request = merchantQueue.peek();
-                            sender.sendMessage("주문자 : "+request.getClientName()+"\n"+
-                                    "주문 아이템 : "+request.getRequestItem()+"\n");
+                        if (OrderPlugin.merchantQueue.peek() != null) {
+                            MerChantModel request = OrderPlugin.merchantQueue.peek();
+                            sender.sendMessage("--------------------------\n"+
+                                    "대기열 첫번째 주문\n"+"주문자 : "+request.getClientName()+"\n"+
+                                    "주문 아이템 : "+request.getRequestItem()+"\n"
+                            +"--------------------------");
                         }
                         else {
                             sender.sendMessage("아직 수락한 주문이 없습니다.");
@@ -95,11 +108,14 @@ public class MerchantCommand implements CommandExecutor {
                     }
 
                     case "대기열": {
-                        if (merchantQueue.peek() != null) {
-                            Queue<MerChantModel> readQueue = merchantQueue;
+
+                        sender.sendMessage(String.valueOf(OrderPlugin.merchantQueue.size()));
+
+                        if (OrderPlugin.merchantQueue.peek() != null) {
+                            Queue<MerChantModel> readQueue = OrderPlugin.merchantQueue;
                             sender.sendMessage("--------------------------");
 
-                            for (int i=0; merchantQueue.size() > i; i++) {
+                            for (int i=0; readQueue.size() > i; i++) {
 
                                 MerChantModel request = readQueue.poll();
 
@@ -112,6 +128,7 @@ public class MerchantCommand implements CommandExecutor {
 
                             sender.sendMessage("--------------------------");
                         }
+                        break;
                 }
 
                     case "도움말": {

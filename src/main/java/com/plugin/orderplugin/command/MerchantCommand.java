@@ -113,11 +113,13 @@ public class MerchantCommand implements CommandExecutor {
 
                         if (OrderPlugin.merchantQueue.peek() != null) {
                             Queue<MerChantModel> readQueue = OrderPlugin.merchantQueue;
+                            int readQueueSize = readQueue.size();
                             sender.sendMessage("--------------------------");
 
-                            for (int i=0; readQueue.size() > i; i++) {
+                            for (int i=0; readQueueSize > i; i++) {
 
                                 MerChantModel request = readQueue.poll();
+                                readQueue.add(request);
 
                                 String message ="주문한 고객 이름 : "+request.getClientName()+"\n"
                                         +"주문한 아이템 : "+request.getRequestItem()+"\n";

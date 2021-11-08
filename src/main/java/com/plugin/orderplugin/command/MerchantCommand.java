@@ -75,11 +75,16 @@ public class MerchantCommand implements CommandExecutor {
                             Player targetPlayer = sender.getServer().getPlayer(request.getClientName());
                             targetPlayer.sendMessage(sender.getName()+"에서"+targetPlayer.getName()+" 님이 주문한 아이템이 완성되었습니다!");
 
+                            PersistentDataContainer targetPlayerData = targetPlayer.getPersistentDataContainer();
+
+                            targetPlayerData.set(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "sendItem")
+                                    , PersistentDataType.STRING, "ok");
 
                         }
                         else {
                             sender.sendMessage("아직 수락한 주문이 없습니다.");
                         }
+                        break;
                     }
 
                     case "주문확인": {
@@ -112,6 +117,7 @@ public class MerchantCommand implements CommandExecutor {
 
                             sender.sendMessage("--------------------------");
                         }
+                        break;
                 }
 
                     case "도움말": {

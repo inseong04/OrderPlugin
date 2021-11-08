@@ -130,6 +130,9 @@ public class MerchantCommand implements CommandExecutor {
 
                             sender.sendMessage("--------------------------");
                         }
+                        else {
+                            sender.sendMessage("상점의 대기열이 없습니다.");
+                        }
                         break;
                 }
 

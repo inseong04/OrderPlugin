@@ -25,7 +25,7 @@ public class OrderModel {
     }
 
     public String setString(){
-        String orderStr = "빵:"+milk+"개/우유:"+milk+"개/물:"+water+"개/치킨:"+chicken+"개/생선"+fish+"개";
+        String orderStr = "빵:"+bread+"개/우유:"+milk+"개/물:"+water+"개/치킨:"+chicken+"개/생선"+fish+"개";
 
         return orderStr;
     }

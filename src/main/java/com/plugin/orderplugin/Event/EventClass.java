@@ -8,6 +8,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.server.ServerCommandEvent;
@@ -26,7 +27,7 @@ public class EventClass implements Listener {
     public void openInventory(InventoryClickEvent e){
         Player player = (Player) e.getWhoClicked();
         orderModel.userName = player.getName();
-        if(e.getView().getTitle().equals("주문 메뉴")){
+        if(e.getView().getTitle().equals("주문 메뉴") && e.getClick() != ClickType.DOUBLE_CLICK){
             e.setCancelled(true);
             switch (e.getRawSlot()){
                 case 11->{

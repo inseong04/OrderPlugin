@@ -82,19 +82,22 @@ public class MerchantCommand implements CommandExecutor {
         } else {
             // if request exist
 
+            final int bread = MerchantData.get(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "bread"), PersistentDataType.INTEGER);
+            final int milk = MerchantData.get(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "milk"), PersistentDataType.INTEGER);
+            final int water = MerchantData.get(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "water"), PersistentDataType.INTEGER);
+            final int chicken = MerchantData.get(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "chicken"), PersistentDataType.INTEGER);
+            final int fish = MerchantData.get(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "fish"), PersistentDataType.INTEGER);
+
+            OrderModel orderModel = new OrderModel(bread, milk, water, chicken, fish);
+
+            MerChantModel merChantModel = new MerChantModel(MerchantData.get(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "clientName"), PersistentDataType.STRING),
+                    MerchantData.get(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "sendToData"), PersistentDataType.STRING),
+                    orderModel);
+
             if (args[0].equals("수락")) {
 
-                final int bread = MerchantData.get(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "bread"), PersistentDataType.INTEGER);
-                final int milk = MerchantData.get(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "milk"), PersistentDataType.INTEGER);
-                final int water = MerchantData.get(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "water"), PersistentDataType.INTEGER);
-                final int chicken = MerchantData.get(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "chicken"), PersistentDataType.INTEGER);
-                final int fish = MerchantData.get(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "fish"), PersistentDataType.INTEGER);
 
-                OrderModel orderModel = new OrderModel(bread, milk, water, chicken, fish);
 
-                MerChantModel merChantModel = new MerChantModel(MerchantData.get(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "clientName"), PersistentDataType.STRING),
-                        MerchantData.get(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "sendToData"), PersistentDataType.STRING),
-                        orderModel);
                 merchantQueue.add(merChantModel);
                 sender.sendMessage(merChantModel.getClientName() + " 님의 주문을 수락합니다.");
 
@@ -104,7 +107,8 @@ public class MerchantCommand implements CommandExecutor {
             } else if (args[0].equals("거절")) {
 
 
-                Player targetPlayer = sender.getServer().getPlayer(clientName);
+                Player targetPlayer = sender.getServer().getPlayer(merChantModel.getClientName());
+                sender.sendMessage(targetPlayer.getName()+" 님의 주문을 거절하였습니다.");
                 targetPlayer.sendMessage(sender.getName() + "님이 주문을 거절하였습니다.");
             }
 
@@ -211,7 +215,6 @@ public class MerchantCommand implements CommandExecutor {
     }
 
     private void orderQueue(CommandSender sender) {
-        sender.sendMessage(String.valueOf(merchantQueue.size()));
 
         if (merchantQueue.peek() != null) {
             Queue<MerChantModel> readQueue = merchantQueue;

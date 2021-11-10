@@ -5,6 +5,9 @@ import com.plugin.orderplugin.command.MerchantCommand;
 import com.plugin.orderplugin.command.StartCommand;
 import com.plugin.orderplugin.model.ClientRequestModel;
 import com.plugin.orderplugin.model.MerChantModel;
+import com.plugin.orderplugin.model.OrderModel;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
@@ -15,6 +18,10 @@ import java.util.Queue;
 public class OrderPlugin extends JavaPlugin {
 
     public static List<ClientRequestModel> requestList = new ArrayList<>();
+    public static ArrayList<OrderModel> orderList = new ArrayList<>();
+    public static ItemStack[] itemStack = {new ItemStack(Material.BREAD), new ItemStack(Material.COOKED_CHICKEN),
+            new ItemStack(Material.WATER_BUCKET), new ItemStack(Material.MILK_BUCKET),
+            new ItemStack(Material.TROPICAL_FISH)};
 
     private OrderPlugin orderPlugin;
 

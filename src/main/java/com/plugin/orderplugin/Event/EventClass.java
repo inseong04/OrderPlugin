@@ -17,6 +17,7 @@ import org.bukkit.persistence.PersistentDataType;
 
 import java.util.logging.Logger;
 
+import static com.plugin.orderplugin.OrderPlugin.orderList;
 import static com.plugin.orderplugin.OrderPlugin.requestList;
 import static com.plugin.orderplugin.command.CustomerCommand.merchantName;
 public class EventClass implements Listener {
@@ -57,12 +58,15 @@ public class EventClass implements Listener {
 
                     sendDataToMerChant(targetPlayerData);
 
+
                     targetPlayerData.set(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "clientName")
                             , PersistentDataType.STRING, player.getName());
 
                     targetPlayer.sendMessage("[상점] "+player.getName()+" 님이 "+orderModel.setString()+ "주문을 요청하였습니다." +
                         "\n"+"요청을 수락하시려면 /상점 수락" +
                             "\n"+"요청을 거절하시려면 /상점 거절");
+
+                    orderList.add(orderModel);
 
                     e.getView().close();
                     orderModel.setZero();

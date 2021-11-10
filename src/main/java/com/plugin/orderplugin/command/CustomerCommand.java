@@ -1,8 +1,11 @@
 package com.plugin.orderplugin.command;
 
 import com.plugin.orderplugin.AppHelper;
+import com.plugin.orderplugin.OrderPlugin;
+import com.plugin.orderplugin.model.OrderModel;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -11,6 +14,14 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
+
+import java.util.List;
+import java.util.Objects;
+
+import static com.plugin.orderplugin.OrderPlugin.itemStack;
+import static com.plugin.orderplugin.OrderPlugin.orderList;
 
 public class CustomerCommand implements CommandExecutor {
     public static String merchantName;
@@ -18,6 +29,7 @@ public class CustomerCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if(AppHelper.isPlayer(sender)){
             Player player = (Player)sender;
+            PersistentDataContainer playerData = player.getPersistentDataContainer();
             if(args[0] != null){
                 if(player.getDisplayName().startsWith("상인")){
                     player.sendMessage("상인은 이 명령어를 사용할 수 없습니다.");
@@ -26,7 +38,19 @@ public class CustomerCommand implements CommandExecutor {
                     merchantName = args[0];
                     switch(merchantName){
                         case "아이템수령":{
-                            PlayerInventory playerInventory= player.getInventory();
+
+                            if(Objects.equals(playerData.get(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "sendItem"), PersistentDataType.STRING), "ok")){
+                                String orderString = playerData.get(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "orderString"),PersistentDataType.STRING);
+                                OrderModel order = setOrderModel(orderString);
+
+                                PlayerInventory playerInventory = player.getInventory();
+                                insertItemToCustomer(playerInventory, order);
+                                orderList.remove(order);
+                                sender.sendMessage("주문하신 아이템이 수령되었습니다.");
+                            }
+                            else{
+                                player.sendMessage("상인이 아이템을 준비중이거나 주문한 아이템이 없습니다.");
+                            }
                             break;
                         }
                         default:{
@@ -40,9 +64,7 @@ public class CustomerCommand implements CommandExecutor {
                             meta1.setDisplayName("주문하기");
                             OrderItem.setItemMeta(meta1);
 
-                            ItemStack[] itemStack = {new ItemStack(Material.BREAD), new ItemStack(Material.COOKED_CHICKEN),
-                                    new ItemStack(Material.WATER_BUCKET), new ItemStack(Material.MILK_BUCKET),
-                                    new ItemStack(Material.TROPICAL_FISH)};
+
 
                             Inventory i = Bukkit.createInventory(player, 27, "주문 메뉴");
                             for(int j=10;j<15;j++){
@@ -64,5 +86,52 @@ public class CustomerCommand implements CommandExecutor {
             sender.sendMessage("플레이어가 아닙니다.");
             return false;
         }
+    }
+
+    private void insertItemToCustomer(PlayerInventory playerInventory, OrderModel order) {
+        for(int i = 1; i<=itemStack.length;i++){
+            int amountItem;
+            switch (i){
+                case 1 :{
+                    amountItem = order.bread;
+                    break;
+                }
+                case 2 : {
+                    amountItem = order.chicken;
+                    break;
+                }
+                case 3 : {
+                    amountItem = order.water;
+                    break;
+                }
+                case 4 : {
+                    amountItem = order.milk;
+                    break;
+                }
+                case 5 : {
+                    amountItem = order.fish;
+                    break;
+                }
+                default:
+                    throw new IllegalStateException("Unexpected value: " + i);
+            }
+            List<ItemStack> itemStackList = List.of(itemStack);
+            itemStackList.get(i - 1).setAmount(amountItem);
+            playerInventory.setItem(i, itemStackList.get(i-1));
+        }
+    }
+
+    private ItemStack setItemStack(ItemStack itemStack,String displayName){
+        ItemMeta meta = itemStack.getItemMeta();
+        meta.setDisplayName("주문하기");
+        itemStack.setItemMeta(meta);
+
+        return itemStack;
+    }
+
+    public OrderModel setOrderModel(String orderString){
+
+
+        return new OrderModel(0, 0, 0,0 ,0);
     }
 }

@@ -34,13 +34,13 @@ public class EventClass implements Listener {
                     orderModel.bread++;
                 }
                 case 12->{
-                    orderModel.milk++;
+                    orderModel.chicken++;
                 }
                 case 13->{
                     orderModel.water++;
                 }
                 case 14->{
-                    orderModel.chicken++;
+                    orderModel.milk++;
                 }
                 case 15->{
                     orderModel.fish++;
@@ -55,8 +55,7 @@ public class EventClass implements Listener {
 
                     PersistentDataContainer targetPlayerData = targetPlayer.getPersistentDataContainer();
 
-                    targetPlayerData.set(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "sendToCustomData")
-                            , PersistentDataType.STRING, orderModel.setString());
+                    sendDataToMerChant(targetPlayerData);
 
                     targetPlayerData.set(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "clientName")
                             , PersistentDataType.STRING, player.getName());
@@ -70,6 +69,23 @@ public class EventClass implements Listener {
                 }
             }
         }
+    }
+
+    private void sendDataToMerChant(PersistentDataContainer targetPlayer) {
+        targetPlayer.set(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "bread")
+                , PersistentDataType.INTEGER, orderModel.bread);
+
+        targetPlayer.set(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "chicken")
+                , PersistentDataType.INTEGER, orderModel.chicken);
+
+        targetPlayer.set(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "water")
+                , PersistentDataType.INTEGER, orderModel.water);
+
+        targetPlayer.set(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "milk")
+                , PersistentDataType.INTEGER, orderModel.milk);
+
+        targetPlayer.set(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "fish")
+                , PersistentDataType.INTEGER, orderModel.fish);
     }
 
 

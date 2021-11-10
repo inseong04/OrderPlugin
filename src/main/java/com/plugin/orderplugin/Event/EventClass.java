@@ -51,7 +51,7 @@ public class EventClass implements Listener {
                 }
                 case 26->{
                     //requestList.add(new ClientRequestModel(player.getDisplayName(), merchantName, orderModel));
-                    player.sendMessage(merchantName+"님에게"+" 주문을 보냈습니다. 기다려주세요");
+                    player.sendMessage(merchantName+"님에게"+orderModel.setString()+"주문을 보냈습니다. 기다려주세요");
                     Player targetPlayer = player.getServer().getPlayer(merchantName);
 
 

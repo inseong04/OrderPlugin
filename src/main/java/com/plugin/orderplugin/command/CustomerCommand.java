@@ -56,6 +56,13 @@ public class CustomerCommand implements CommandExecutor {
                             }
                             break;
                         }
+                        case "주문보기":{
+                            player.sendMessage("======================================================\n");
+                            for(int i=0;i<orderList.size();i++){
+                                player.sendMessage(i+". "+orderList.get(i).setString()
+                                        +"\n--------------------------------------------------");
+                            }
+                        }
                         default:{
 
                             ItemStack[] itemStack = {new ItemStack(Material.BREAD), new ItemStack(Material.COOKED_CHICKEN),

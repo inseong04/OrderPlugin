@@ -124,7 +124,7 @@ public class CustomerCommand implements CommandExecutor {
             }
             List<ItemStack> itemStackList = List.of(itemStack);
             itemStackList.get(i - 1).setAmount(amountItem);
-            playerInventory.setItem(i, itemStackList.get(i-1));
+            playerInventory.addItem(itemStackList.get(i-1));
         }
     }
 

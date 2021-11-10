@@ -36,10 +36,23 @@ import java.util.*;
 public class MerChantModel implements Player {
     String clientName;
     String requestItem;
+    OrderModel orderModel;
 
-    public MerChantModel(String clientName, String requestItem) {
+    // orderModel is based on OrderModel type.
+
+
+    public MerChantModel(String clientName, String requestItem, OrderModel orderModel) {
         this.clientName = clientName;
         this.requestItem = requestItem;
+        this.orderModel = orderModel;
+    }
+
+    public OrderModel getOrderModel() {
+        return orderModel;
+    }
+
+    public void setOrderModel(OrderModel orderModel) {
+        this.orderModel = orderModel;
     }
 
     public String getClientName() {

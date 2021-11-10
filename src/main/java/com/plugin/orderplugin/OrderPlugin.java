@@ -16,8 +16,6 @@ public class OrderPlugin extends JavaPlugin {
 
     public static List<ClientRequestModel> requestList = new ArrayList<>();
 
-    public static Queue<MerChantModel> merchantQueue;
-
     private OrderPlugin orderPlugin;
 
     @Override
@@ -26,7 +24,6 @@ public class OrderPlugin extends JavaPlugin {
         getLogger().info("Order Plugin 활성화");
         getServer().getPluginManager().registerEvents(new EventClass(), this);
         setCommend();
-        merchantQueue = new LinkedList<>();
     }
 
     private void setCommend() {

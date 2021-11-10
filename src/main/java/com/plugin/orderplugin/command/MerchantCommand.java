@@ -20,7 +20,7 @@ public class MerchantCommand implements CommandExecutor {
 
 
     PersistentDataContainer MerchantData;
-
+    private Queue<MerChantModel> merchantQueue  = new LinkedList<>();;
     public static String clientName;
     public static String requestItem;
 
@@ -89,17 +89,17 @@ public class MerchantCommand implements CommandExecutor {
 
             if(args[0].equals("수락")) {
 
-                sender.sendMessage("before : "+String.valueOf(OrderPlugin.merchantQueue.size()));
+                sender.sendMessage("before : "+String.valueOf(merchantQueue.size()));
 
 
                 MerChantModel merChantModel = new MerChantModel(MerchantData.get(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "clientName"), PersistentDataType.STRING),
                         MerchantData.get(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "sendToCustomData"), PersistentDataType.STRING));
-                OrderPlugin.merchantQueue.add(merChantModel);
+                merchantQueue.add(merChantModel);
                 sender.sendMessage(merChantModel.getClientName() + " 님의 주문을 수락합니다.");
 
                 Player targetPlayer = sender.getServer().getPlayer(merChantModel.getClientName());
                 targetPlayer.sendMessage(sender.getName() + " 님이 주문을 수락하였습니다!");
-                sender.sendMessage("after"+String.valueOf(OrderPlugin.merchantQueue.size()));
+                sender.sendMessage("after"+String.valueOf(merchantQueue.size()));
 
             }
 
@@ -116,8 +116,8 @@ public class MerchantCommand implements CommandExecutor {
     }
 
     private void orderComplete(CommandSender sender) {
-        if (OrderPlugin.merchantQueue.peek() != null) {
-            MerChantModel request = OrderPlugin.merchantQueue.poll();
+        if (merchantQueue.peek() != null) {
+            MerChantModel request = merchantQueue.poll();
             Player targetPlayer = sender.getServer().getPlayer(request.getClientName());
             targetPlayer.sendMessage(sender.getName()+"에서"+targetPlayer.getName()+" 님이 주문한 아이템이 완성되었습니다!\n아이템을 받으려면 /주문 아이템수령 을 입력해주세요!");
 
@@ -133,8 +133,8 @@ public class MerchantCommand implements CommandExecutor {
     }
 
     private void orderLookup(CommandSender sender) {
-        if (OrderPlugin.merchantQueue.peek() != null) {
-            MerChantModel request = OrderPlugin.merchantQueue.peek();
+        if (merchantQueue.peek() != null) {
+            MerChantModel request = merchantQueue.peek();
             sender.sendMessage("--------------------------\n"+
                     "대기열 첫번째 주문\n"+"주문자 : "+request.getClientName()+"\n"+
                     "주문 아이템 : "+request.getRequestItem()+"\n"
@@ -146,10 +146,10 @@ public class MerchantCommand implements CommandExecutor {
     }
 
     private void orderQueue(CommandSender sender) {
-        sender.sendMessage(String.valueOf(OrderPlugin.merchantQueue.size()));
+        sender.sendMessage(String.valueOf(merchantQueue.size()));
 
-        if (OrderPlugin.merchantQueue.peek() != null) {
-            Queue<MerChantModel> readQueue = OrderPlugin.merchantQueue;
+        if (merchantQueue.peek() != null) {
+            Queue<MerChantModel> readQueue = merchantQueue;
             int readQueueSize = readQueue.size();
             sender.sendMessage("--------------------------");
 

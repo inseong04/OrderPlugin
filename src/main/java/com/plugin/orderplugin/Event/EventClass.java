@@ -54,6 +54,7 @@ public class EventClass implements Listener {
                     player.sendMessage(merchantName+"님에게"+" 주문을 보냈습니다. 기다려주세요");
                     Player targetPlayer = player.getServer().getPlayer(merchantName);
 
+
                     PersistentDataContainer targetPlayerData = targetPlayer.getPersistentDataContainer();
 
                     sendDataToMerChant(targetPlayerData);
@@ -76,6 +77,9 @@ public class EventClass implements Listener {
     }
 
     private void sendDataToMerChant(PersistentDataContainer targetPlayer) {
+        targetPlayer.set(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "sendToData")
+                , PersistentDataType.STRING, orderModel.setString());
+
         targetPlayer.set(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "bread")
                 , PersistentDataType.INTEGER, orderModel.bread);
 

@@ -132,6 +132,6 @@ public class CustomerCommand implements CommandExecutor {
     public OrderModel setOrderModel(String orderString){
 
 
-        return new OrderModel(0, 0, 0,0 ,0);
+        return new OrderModel(4, 4, 4,4 ,4);
     }
 }

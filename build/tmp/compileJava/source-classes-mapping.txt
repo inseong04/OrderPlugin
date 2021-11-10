@@ -6,15 +6,15 @@ com/plugin/orderplugin/AppHelper.java
  com.plugin.orderplugin.AppHelper
 com/plugin/orderplugin/model/ClientRequestModel.java
  com.plugin.orderplugin.model.ClientRequestModel
+com/plugin/orderplugin/command/StartCommand.java
+ com.plugin.orderplugin.command.StartCommand
+com/plugin/orderplugin/model/OrderModel.java
+ com.plugin.orderplugin.model.OrderModel
 com/plugin/orderplugin/command/CustomerCommand.java
  com.plugin.orderplugin.command.CustomerCommand
+com/plugin/orderplugin/Event/EventClass.java
+ com.plugin.orderplugin.Event.EventClass
 com/plugin/orderplugin/OrderPlugin.java
  com.plugin.orderplugin.OrderPlugin
 com/plugin/orderplugin/command/MerchantCommand.java
  com.plugin.orderplugin.command.MerchantCommand
-com/plugin/orderplugin/command/StartCommand.java
- com.plugin.orderplugin.command.StartCommand
-com/plugin/orderplugin/Event/EventClass.java
- com.plugin.orderplugin.Event.EventClass
-com/plugin/orderplugin/model/OrderModel.java
- com.plugin.orderplugin.model.OrderModel

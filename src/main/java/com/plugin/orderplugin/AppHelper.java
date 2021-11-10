@@ -17,7 +17,10 @@ public class AppHelper {
         // if item is satisfied -> false, else true.
 
         for (ItemStack item : itemStacks) {
-            if (item.getType() == targetMaterial && item.getAmount() == targetAmount) {
+            if (item == null) {
+                continue;
+            }
+            if (item.getType() == targetMaterial && item.getAmount() >= targetAmount) {
                 return false;
             }
         }

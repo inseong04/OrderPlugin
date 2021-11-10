@@ -31,8 +31,6 @@ public class MerchantCommand implements CommandExecutor {
         MerchantData = p.getPersistentDataContainer();
         if (AppHelper.isPlayer(sender)) {
 
-
-            sender.sendMessage(String.valueOf(args[0]));
             if (args[0] != null) {
                 switch (args[0]) {
                     case "수락":
@@ -79,14 +77,12 @@ public class MerchantCommand implements CommandExecutor {
 
     private void order(String[] args, CommandSender sender) {
 
-        if (!MerchantData.has(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "sendToCustomData"), PersistentDataType.STRING)) {
+        if (!MerchantData.has(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "sendToData"), PersistentDataType.STRING)) {
             sender.sendMessage(sender.getName() + " 님에게 들어온 주문이 없습니다.");
         } else {
             // if request exist
 
             if (args[0].equals("수락")) {
-
-                sender.sendMessage("before : " + String.valueOf(merchantQueue.size()));
 
                 final int bread = MerchantData.get(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "bread"), PersistentDataType.INTEGER);
                 final int milk = MerchantData.get(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "milk"), PersistentDataType.INTEGER);
@@ -97,14 +93,13 @@ public class MerchantCommand implements CommandExecutor {
                 OrderModel orderModel = new OrderModel(bread, milk, water, chicken, fish);
 
                 MerChantModel merChantModel = new MerChantModel(MerchantData.get(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "clientName"), PersistentDataType.STRING),
-                        MerchantData.get(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "sendToCustomData"), PersistentDataType.STRING),
+                        MerchantData.get(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "sendToData"), PersistentDataType.STRING),
                         orderModel);
                 merchantQueue.add(merChantModel);
                 sender.sendMessage(merChantModel.getClientName() + " 님의 주문을 수락합니다.");
 
                 Player targetPlayer = sender.getServer().getPlayer(merChantModel.getClientName());
                 targetPlayer.sendMessage(sender.getName() + " 님이 주문을 수락하였습니다!");
-                sender.sendMessage("after" + String.valueOf(merchantQueue.size()));
 
             } else if (args[0].equals("거절")) {
 
@@ -120,59 +115,59 @@ public class MerchantCommand implements CommandExecutor {
 
     private void orderComplete(CommandSender sender) {
         if (merchantQueue.peek() != null) {
-            MerChantModel request = merchantQueue.poll();
+            MerChantModel request = merchantQueue.peek();
             Player targetPlayer = sender.getServer().getPlayer(request.getClientName());
             Player player = sender.getServer().getPlayer(sender.getName());
 
             ItemStack[] itemStacks = player.getInventory().getContents();
-            if (request.getOrderModel().bread >= 0) {
+            if (request.getOrderModel().bread > 0) {
 
                 if (AppHelper.isNotSatisfyItem(itemStacks, Material.BREAD, request.getOrderModel().bread)) {
                     sender.sendMessage("현재 인벤토리에 빵이 존재하지 않거나 갯수가 부족합니다.");
                     return;
                 }
                 ItemStack itemStack = new ItemStack(Material.BREAD);
-                itemStack.setAmount(request.getOrderModel().bread * -1);
-                player.getInventory().remove(itemStack);
+                itemStack.setAmount(request.getOrderModel().bread);
+                player.getInventory().removeItem(itemStack);
             }
-            if (request.getOrderModel().chicken >= 0) {
+            if (request.getOrderModel().chicken > 0) {
                 if (AppHelper.isNotSatisfyItem(itemStacks, Material.COOKED_CHICKEN, request.getOrderModel().chicken)) {
                     sender.sendMessage("현재 인벤토리에 치킨이 존재하지 않거나 갯수가 부족합니다.");
                     return;
                 }
                 ItemStack itemStack = new ItemStack(Material.COOKED_CHICKEN);
-                itemStack.setAmount(request.getOrderModel().chicken * -1);
-                player.getInventory().remove(itemStack);
+                itemStack.setAmount(request.getOrderModel().chicken);
+                player.getInventory().removeItem(itemStack);
 
             }
-            if (request.getOrderModel().fish >= 0) {
+            if (request.getOrderModel().fish > 0) {
                 if (AppHelper.isNotSatisfyItem(itemStacks, Material.TROPICAL_FISH, request.getOrderModel().fish)) {
                     sender.sendMessage("현재 인벤토리에 열대어가 존재하지 않거나 갯수가 부족합니다.");
                     return;
                 }
                 ItemStack itemStack = new ItemStack(Material.TROPICAL_FISH);
-                itemStack.setAmount(request.getOrderModel().fish * -1);
-                player.getInventory().remove(itemStack);
+                itemStack.setAmount(request.getOrderModel().fish);
+                player.getInventory().removeItem(itemStack);
             }
-            if (request.getOrderModel().milk >= 0) {
+            if (request.getOrderModel().milk > 0) {
 
                 if (AppHelper.isNotSatisfyItem(itemStacks, Material.MILK_BUCKET, request.getOrderModel().milk)) {
                     sender.sendMessage("현재 인벤토리에 우유가 존재하지 않거나 갯수가 부족합니다.");
                     return;
                 }
                 ItemStack itemStack = new ItemStack(Material.MILK_BUCKET);
-                itemStack.setAmount(request.getOrderModel().milk * -1);
-                player.getInventory().remove(itemStack);
+                itemStack.setAmount(request.getOrderModel().milk);
+                player.getInventory().removeItem(itemStack);
 
             }
-            if (request.getOrderModel().water >= 0) {
+            if (request.getOrderModel().water > 0) {
 
                 if (AppHelper.isNotSatisfyItem(itemStacks, Material.WATER_BUCKET, request.getOrderModel().water)) {
                     sender.sendMessage("현재 인벤토리에 물이 존재하지 않거나 갯수가 부족합니다.");
                     return;
                 }
                 ItemStack itemStack = new ItemStack(Material.WATER_BUCKET);
-                itemStack.setAmount(request.getOrderModel().water * -1);
+                itemStack.setAmount(request.getOrderModel().water);
                 player.getInventory().remove(itemStack);
             }
 
@@ -185,8 +180,18 @@ public class MerchantCommand implements CommandExecutor {
 
             targetPlayerData.set(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "sendItem")
                     , PersistentDataType.STRING, "ok");
-            targetPlayerData.set(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "orderString"),
-                    PersistentDataType.STRING, request.getOrderModel().setString());
+            targetPlayerData.set(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "bread"),
+                    PersistentDataType.INTEGER, request.getOrderModel().bread);
+            targetPlayerData.set(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "chicken"),
+                    PersistentDataType.INTEGER, request.getOrderModel().chicken);
+            targetPlayerData.set(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "fish"),
+                    PersistentDataType.INTEGER, request.getOrderModel().fish);
+            targetPlayerData.set(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "milk"),
+                    PersistentDataType.INTEGER, request.getOrderModel().milk);
+            targetPlayerData.set(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "water"),
+                    PersistentDataType.INTEGER, request.getOrderModel().water);
+
+            merchantQueue.poll();
 
         } else {
             sender.sendMessage("아직 수락한 주문이 없습니다.");

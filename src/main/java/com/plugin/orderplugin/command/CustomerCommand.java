@@ -9,6 +9,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -41,7 +42,9 @@ public class CustomerCommand implements CommandExecutor {
 
                             if(Objects.equals(playerData.get(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "sendItem"), PersistentDataType.STRING), "ok")){
                                 String orderString = playerData.get(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "orderString"),PersistentDataType.STRING);
-                                OrderModel order = setOrderModel(orderString);
+                                OrderModel order = setOrderModel(playerData);
+
+                                Objects.equals(playerData.get(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "sendItem"), PersistentDataType.STRING), "no");
 
                                 PlayerInventory playerInventory = player.getInventory();
                                 insertItemToCustomer(playerInventory, order);
@@ -54,15 +57,19 @@ public class CustomerCommand implements CommandExecutor {
                             break;
                         }
                         default:{
-                            ItemStack BackItem = new ItemStack(Material.RED_BED);
-                            ItemMeta meta = BackItem.getItemMeta();
-                            meta.setDisplayName("뒤로가기");
-                            BackItem.setItemMeta(meta);
 
-                            ItemStack OrderItem = new ItemStack(Material.DARK_OAK_DOOR);
-                            ItemMeta meta1 = BackItem.getItemMeta();
-                            meta1.setDisplayName("주문하기");
-                            OrderItem.setItemMeta(meta1);
+                            ItemStack[] itemStack = {new ItemStack(Material.BREAD), new ItemStack(Material.COOKED_CHICKEN),
+                                    new ItemStack(Material.WATER_BUCKET), new ItemStack(Material.MILK_BUCKET),
+                                    new ItemStack(Material.TROPICAL_FISH)};
+//                            ItemStack BackItem = new ItemStack(Material.RED_BED);
+//                            ItemMeta meta = BackItem.getItemMeta();
+//                            meta.setDisplayName("뒤로가기");
+//                            BackItem.setItemMeta(meta);
+//
+//                            ItemStack OrderItem = new ItemStack(Material.DARK_OAK_DOOR);
+//                            ItemMeta meta1 = BackItem.getItemMeta();
+//                            meta1.setDisplayName("주문하기");
+//                            OrderItem.setItemMeta(meta1);
 
 
 
@@ -70,8 +77,8 @@ public class CustomerCommand implements CommandExecutor {
                             for(int j=10;j<15;j++){
                                 i.setItem(j+1, itemStack[j-10]);
                             }
-                            i.setItem(18, BackItem);
-                            i.setItem(26, OrderItem);
+                            i.setItem(18, setItemStack(new ItemStack(Material.RED_BED), "뒤로가기"));
+                            i.setItem(26, setItemStack(new ItemStack(Material.DARK_OAK_DOOR), "주문하기"));
                             player.openInventory(i);
                         }
                     }
@@ -129,9 +136,14 @@ public class CustomerCommand implements CommandExecutor {
         return itemStack;
     }
 
-    public OrderModel setOrderModel(String orderString){
+    public OrderModel setOrderModel(PersistentDataContainer playerData){
 
+        final int bread = playerData.get(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "bread"), PersistentDataType.INTEGER);
+        final int milk = playerData.get(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "milk"), PersistentDataType.INTEGER);
+        final int water = playerData.get(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "water"), PersistentDataType.INTEGER);
+        final int chicken = playerData.get(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "chicken"), PersistentDataType.INTEGER);
+        final int fish = playerData.get(new NamespacedKey(OrderPlugin.getPlugin(OrderPlugin.class), "fish"), PersistentDataType.INTEGER);
 
-        return new OrderModel(4, 4, 4,4 ,4);
+        return new OrderModel(bread, milk, water,chicken ,fish);
     }
 }
